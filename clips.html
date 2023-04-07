@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Xbox Game Clips - {{ gamertag }}</title>
+      <style>
+         body {
+         font-family: Arial, sans-serif;
+         background-color: #f0f0f0;
+         }
+         h1 {
+         text-align: center;
+         font-size: 2em;
+         margin-top: 30px;
+         margin-bottom: 20px;
+         position: absolute;
+         left: 50%;
+         transform: translateX(-50%);
+         }
+         .container {
+         display: flex;
+         flex-wrap: wrap;
+         justify-content: center;
+         margin: 0 auto;
+         max-width: 1980px;
+         }
+         .gameclip {
+         margin: 10px;
+         width: 300px;
+         background-color: #ffffff;
+         border-radius: 8px;
+         box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+         }
+         .gameclip:hover {
+         box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+         }
+         .gameclip img {
+         display: block;
+         margin: 0 auto;
+         max-width: 100%;
+         height: auto;
+         border-top-left-radius: 8px;
+         border-top-right-radius: 8px;
+         }
+         .gameclip h3 {
+         margin-top: 10px;
+         margin-bottom: 5px;
+         font-size: 1.5em;
+         text-align: center;
+         color: #444444;
+         }
+         .gameclip p {
+         margin: 0;
+         font-size: 1em;
+         text-align: center;
+         color: #666666;
+         }
+         p.no-clips {
+         text-align: center;
+         font-size: 1.2em;
+         color: #444444;
+         }
+        header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background-color: #ffffff;
+          padding: 20px 10px; /* Increase top and bottom padding to make header taller */
+          box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .avatar-img {
+          width: 35px;
+          height: 35px;
+          border-radius: 50%;
+        }
+         .home-button {
+         font-size: 1.2em;
+         color: #666666;
+         text-decoration: none;
+         }
+         .home-button:hover {
+         text-decoration: underline;
+         }
+         .search-form {
+         display: flex;
+         align-items: center;
+         }
+         #gamertag-input {
+         width: 200px;
+         margin-right: 10px;
+         padding: 5px;
+         border-radius: 4px;
+         border: none;
+         font-size: 1em;
+         }
+         button[type="submit"] {
+         background-color: #0078d7;
+         color: #ffffff;
+         border: none;
+         border-radius: 4px;
+         padding: 5px 10px;
+         font-size: 1em;
+         cursor: pointer;
+         }
+         button[type="submit"]:hover {
+         background-color: #005a9e;
+         }
+      </style>
+   </head>
+   <body>
+      <header>
+        <a href="/" class="home-button">Home</a>
+        <img src="{{ avatar }}" alt="Avatar" class="avatar-img">
+        <h1>{{ gamertag }}</h1>
+        <form class="search-form" action="/gamertag/" method="get" id="search-form">
+          <input type="text" name="gamertag" placeholder="Enter Xbox Gamertag..." id="gamertag-input">
+          <button type="submit">Search</button>
+        </form>
+      </header>
+      {% if gameclips %} 
+      <div class="container">
+         {% for clip in gameclips %} 
+         <div class="gameclip">
+            <a href="https://xboxdvr.swefz.repl.co/gamertag/{{ gamertag }}/clips/{{ clip['unique_id'] }}" target="_blank">
+            <img src="{{ clip['thumbnail_url'] }}" alt="{{ clip['game_title'] }}">
+            </a>
+            <h3>{{ clip['game_title'] }}</h3>
+            <p>{{ clip['date_created'] }}</p>
+         </div>
+         {% endfor %} 
+      </div>
+      {% else %} 
+      <p class="no-clips">No game clips found for this gamertag.</p>
+      {% endif %} <script>
+         const form = document.getElementById('search-form');
+         const input = document.getElementById('gamertag-input');
+         form.addEventListener('submit', (event) => {
+           event.preventDefault();
+           window.location.href = `/gamertag/${input.value}`;
+         });
+      </script>
+   </body>
+</html>

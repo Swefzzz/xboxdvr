@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Xbox Game Clips</title>
+      <style>
+         body {
+         font-family: Arial, sans-serif;
+         background-color: #f0f0f0;
+         }
+         h1 {
+         text-align: center;
+         font-size: 2em;
+         margin-top: 30px;
+         margin-bottom: 20px;
+         position: absolute;
+         left: 50%;
+         transform: translateX(-50%);
+         }
+         p {
+         text-align: center;
+         }
+         button {
+         display: block;
+         margin: 0 auto;
+         padding: 10px;
+         font-size: 1.2em;
+         background-color: #0080ff;
+         color: #ffffff;
+         border: none;
+         border-radius: 8px;
+         cursor: pointer;
+         }
+         button:hover {
+         background-color: #005ce6;
+         }
+        header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background-color: #ffffff;
+          padding: 20px 10px; /* Increase top and bottom padding to make header taller */
+          box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+         .home-button {
+         font-size: 1.2em;
+         color: #666666;
+         text-decoration: none;
+         }
+         .home-button:hover {
+         text-decoration: underline;
+         }
+         .search-form {
+         display: flex;
+         align-items: center;
+         }
+         #gamertag-input {
+         width: 200px;
+         margin-right: 10px;
+         padding: 5px;
+         border-radius: 4px;
+         border: none;
+         font-size: 1em;
+         }
+         button[type="submit"] {
+         background-color: #0078d7;
+         color: #ffffff;
+         border: none;
+         border-radius: 4px;
+         padding: 5px 10px;
+         font-size: 1em;
+         cursor: pointer;
+         }
+         button[type="submit"]:hover {
+         background-color: #005a9e;
+         }
+      </style>
+   </head>
+   <body>
+      {% if gamertag == "LocationFinder" %} 
+      <header>
+         <a href="/" class="home-button">Home</a>
+         <h1>Gamertag not found on the page.</h1>
+         <form class="search-form" action="/gamertag/" method="get" id="search-form">
+            <input type="text" name="gamertag" placeholder="Enter Xbox Gamertag..." id="gamertag-input">
+            <button type="submit">Search</button>
+            <script>
+               const form = document.getElementById('search-form');
+               const input = document.getElementById('gamertag-input');
+               form.addEventListener('submit', (event) => {
+                 event.preventDefault();
+                 window.location.href = `/gamertag/${input.value}`;
+               });
+            </script>
+         </form>
+      </header>
+      {% else %} 
+      <header>
+         <a href="/" class="home-button">Home</a>
+         <h1>{{ gamertag }}</h1>
+         <form class="search-form" action="/gamertag/" method="get" id="search-form">
+            <input type="text" name="gamertag" placeholder="Enter Xbox Gamertag..." id="gamertag-input">
+            <button type="submit">Search</button>
+         </form>
+      </header>
+      <p>Welcome to Xbox Game Clips!</p>
+      <p>Choose an option below:</p>
+      <button onclick="window.location.href = window.location.href + '/clips'">Clips</button>
+      <button onclick="window.location.href = window.location.href + '/screenshots'">Screenshots</button>\ <script>
+         const form = document.getElementById('search-form');
+         const input = document.getElementById('gamertag-input');
+         form.addEventListener('submit', (event) => {
+           event.preventDefault();
+           window.location.href = `/gamertag/${input.value}`;
+         });
+      </script> {% endif %}
+   </body>
+</html>
